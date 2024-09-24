@@ -1,4 +1,5 @@
-from typing import Iterable
+from numbers import Number
+from typing import Iterable, Union
 from process import Process
 
 
@@ -52,14 +53,32 @@ class TimedProcess(Process):
 class SJF:
     def __init__(self, data: Iterable[TimedProcess] = None) -> None:
         self.__i = 0
+        self.__data: set[TimedProcess]
         if not data:
             self.__data = set()
-        if all(type(obj) == TimedProcess for obj in data):
-            self.__data: set[TimedProcess] = set(data)
+        elif all(isinstance(obj, [Number, Process, TimedProcess]) for obj in data):
+            self.__data: set[TimedProcess] = set(map(TimedProcess, data))
         else:
             raise ValueError
 
-    def pop(self) -> Process:
+    def __init_subclass__(cls) -> None:
+        pass
+
+    def pop(self) -> TimedProcess:
         process = min(self.__data)
         self.__data.discard(process)
         return process
+
+    # def add(self, process: Process | int) -> None:  # python 3.10
+    def add(self, process: Union[Process, int]) -> None:
+        if isinstance(process, Process):
+            process = TimedProcess(Process)
+        if isinstance(process, int):
+            process = TimedProcess(process)
+        elif not isinstance(process, TimedProcess):
+            raise ValueError
+
+        self.__data.insert(0, process)
+
+    def run(self):
+        yield self.pop()

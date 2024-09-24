@@ -20,7 +20,7 @@ class Queue:
     def pop(self) -> Process:
         return self.__data.pop()
 
-    def add(self, process: Process) -> None:
+    def add(self, process: Process | int) -> None:
         if isinstance(process, Process):
             self.__data.insert(0, process)
         if isinstance(process, int):
