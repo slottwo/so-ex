@@ -10,6 +10,9 @@ class Process:
         # from random import randint
         # self.clk = randint(1, 1e5)
 
+    def __str__(self) -> str:
+        return str(self.pid)
+
     @property
     def pid(self) -> int:
         """A positive Integer"""  # 0 is not positive
