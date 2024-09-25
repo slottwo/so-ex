@@ -52,7 +52,6 @@ class TimedProcess(Process):
 
 class SJF:
     def __init__(self, data: Iterable[TimedProcess] = None) -> None:
-        self.__i = 0
         self.__data: set[TimedProcess]
         if not data:
             self.__data = set()

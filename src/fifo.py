@@ -3,7 +3,6 @@ from process import Process
 
 class Queue:
     def __init__(self, data: list[Process] = list()) -> None:
-        self.__i = 0
         if all(type(obj) == Process for obj in data):
             self.__data: list[Process] = data
         else:
