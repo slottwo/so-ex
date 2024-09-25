@@ -1,4 +1,3 @@
-from numbers import Number
 from typing import Iterable
 from process import Process
 
