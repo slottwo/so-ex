@@ -12,8 +12,8 @@ class Process:
         # self.parent: int = ppid
         # self.status: Status = ...
 
-        # from random import randint
-        # self.clk = randint(1, 1e5)
+    def __hash__(self) -> int:
+        return ...
 
     def __str__(self) -> str:
         return str(self.pid)

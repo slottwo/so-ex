@@ -12,6 +12,9 @@ class TimedProcess(Process):
             self.time = randint(0, 1000)
         else:
             self.time = time
+    
+    def __hash__(self) -> int:
+        return super().__hash__()
 
     @staticmethod
     def timefyProcess(process: Process):
