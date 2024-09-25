@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Iterable, Union
+from typing import Iterable
 from process import Process
 
 
@@ -9,9 +9,14 @@ class TimedProcess(Process):
 
         if time == None:
             from random import randint
-            self.time = randint(10000)
+
+            self.time = randint(0, 1e3)
         else:
             self.time = time
+
+    @staticmethod
+    def timefyProcess(process: Process):
+        return TimedProcess(process.pid, process.priority)
 
     @property
     def time(self) -> int:
@@ -55,7 +60,7 @@ class SJF:
         self.__data: set[TimedProcess]
         if not data:
             self.__data = set()
-        elif all(isinstance(obj, [Number, Process, TimedProcess]) for obj in data):
+        elif all(isinstance(obj, (Number, Process, TimedProcess)) for obj in data):
             self.__data: set[TimedProcess] = set(map(TimedProcess, data))
         else:
             raise ValueError
@@ -68,8 +73,7 @@ class SJF:
         self.__data.discard(process)
         return process
 
-    # def add(self, process: Process | int) -> None:  # python 3.10
-    def add(self, process: Union[Process, int]) -> None:
+    def add(self, process: Process | int) -> None:
         if isinstance(process, Process):
             process = TimedProcess(Process)
         if isinstance(process, int):
