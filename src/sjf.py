@@ -57,13 +57,13 @@ class TimedProcess(Process):
 
 class SJF:
     def __init__(self, data: Iterable[TimedProcess] = None) -> None:
-        self.__data: set[TimedProcess]
-        if not data:
-            self.__data = set()
-        elif all(isinstance(obj, (Number, Process, TimedProcess)) for obj in data):
-            self.__data: set[TimedProcess] = set(map(TimedProcess, data))
-        else:
-            raise ValueError
+        self.__data: set[TimedProcess] = set()
+        if data:
+            if isinstance(data, Iterable):
+                for obj in data:
+                    self.add(obj)
+            else:
+                raise ValueError
 
     def __init_subclass__(cls) -> None:
         pass
