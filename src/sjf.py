@@ -9,7 +9,7 @@ class TimedProcess(Process):
         if time == None:
             from random import randint
 
-            self.time = randint(0, 1e3)
+            self.time = randint(0, 1000)
         else:
             self.time = time
 
@@ -74,13 +74,13 @@ class SJF:
 
     def add(self, process: Process | int) -> None:
         if isinstance(process, Process):
-            process = TimedProcess(Process)
+            process = TimedProcess.timefy(Process)
         if isinstance(process, int):
             process = TimedProcess(process)
         elif not isinstance(process, TimedProcess):
             raise ValueError
 
-        self.__data.insert(0, process)
+        self.__data.add(process)
 
     def run(self):
         yield self.pop()
