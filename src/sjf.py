@@ -12,7 +12,7 @@ class TimedProcess(Process):
             self.time = randint(0, 1000)
         else:
             self.time = time
-    
+
     def __hash__(self) -> int:
         return super().__hash__()
 
@@ -77,10 +77,11 @@ class SJF:
 
     def add(self, process: Process | int) -> None:
         if isinstance(process, Process):
-            process = TimedProcess.timefy(Process)
-        if isinstance(process, int):
+            if not isinstance(process, TimedProcess):
+                process = TimedProcess.timefy(Process)
+        elif isinstance(process, int):
             process = TimedProcess(process)
-        elif not isinstance(process, TimedProcess):
+        else:
             raise ValueError
 
         self.__data.add(process)
